@@ -1,4 +1,4 @@
-{!! Form::open(array('url'=>'proyecto','method'=>'GET','autocomplete'=>'off','role'=>'search')) !!}
+<!-- {!! Form::open(array('url'=>'proyecto','method'=>'GET','autocomplete'=>'off','role'=>'search')) !!}
 
 <div class="form-group">
 	<div class="input-group">
@@ -9,4 +9,4 @@
 	</div>
 </div>
 		
-{!!Form::close()!!}
+{!!Form::close()!!} -->

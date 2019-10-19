@@ -4,6 +4,11 @@ namespace sisScrum\Http\Controllers;
 
 use sisScrum\Http\Requests;
 use Illuminate\Http\Request;
+use sisScrum\User;
+use sisScrum\Asignado;
+use sisScrum\Tarea;
+
+use Auth;
 
 class HomeController extends Controller
 {
@@ -14,7 +19,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        // $this->middleware('auth');
+        $this->middleware('auth');
     }
 
     /**
@@ -24,6 +29,18 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $miId = Auth::user()->id ;
+        $misProyectos=Asignado::where('idusuario','=',$miId)->with('proyecto')->paginate(10);        
+        $misTareasProgreso = Tarea::where('idusuario','=',$miId)->where('estado','=','2')->paginate(10);                        
+
+        return view('home')->with(compact('misProyectos', 'misTareasProgreso'));
+    }
+    public function mistareas()
+    {
+        $miId = Auth::user()->id ;                
+        $misTareasTerminadas = Tarea::where('idusuario','=',$miId)->where('estado','=','3')->paginate(10);
+        $misTareasProgreso = Tarea::where('idusuario','=',$miId)->where('estado','=','2')->paginate(10);
+
+        return view('tareas')->with(compact('misTareasTerminadas', 'misTareasProgreso'));
     }
 }

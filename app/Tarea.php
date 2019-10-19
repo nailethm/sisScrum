@@ -6,21 +6,70 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tarea extends Model
 {
-    protected $table='proyecto';
+    protected $table='tarea';
 
-    protected $primaryKey='idproyecto';
+    protected $primaryKey='idtarea';
 
     public $timestamps=false;
 
     protected $fillable=[
-    	'nombre',
+        'idhistoria',
+        'idusuario',
+    	'titulo',
     	'descripcion',
-    	'inicio_proyecto',
-    	'fin_proyecto',
+        'dificultad',
+    	'testimado',    	
     	'estado'
     ];
 
     protected $guarded=[
 
     ];
+
+    public function usuario()
+    {
+        return $this->belongsTo('sisScrum\User', 'idusuario');
+    }
+    public function historia()
+    {
+        return $this->belongsTo('sisScrum\Historia', 'idhistoria');
+    }
+    public function avances()
+    {
+        return $this->hasMany('sisScrum\AvanceTarea','idtarea','idtarea');
+    }
+
+    public function getTotalHorasTrabajadasAttribute()
+    {
+        
+        return $this->avances()->sum('htrabajada');
+    }
+    public function getPorcentajeTareaAttribute()
+    {
+        $sumht=$this->avances()->sum('htrabajada');
+        $total_estimadas=$this->testimado;
+        $porcentaje_completado=($sumht*100)/$total_estimadas;
+
+        return number_format((float)$porcentaje_completado, 0, '.', '');
+    }
+    public function getNombreEstadoTareaAttribute()
+    {        
+        if ($this->estado=='1') {
+            return 'Pendiente';
+        }
+        if ($this->estado=='2') {
+            return 'En curso';
+        }
+        if ($this->estado=='3') {
+            return 'Completada';
+        }        
+        return 'Eliminada';
+    }
+    public function estaAT(User $user)
+    {        
+        if($this->idusuario == $user->id){
+            return true;
+        }        
+        return false;
+    }
 }

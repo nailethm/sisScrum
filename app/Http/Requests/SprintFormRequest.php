@@ -24,7 +24,7 @@ class SprintFormRequest extends Request
     public function rules()
     {
         return [
-            'idproyecto'=>'required',
+            // 'titulo'=>'required|max:50',
             'nota'=>'max:256'
         ];
     }

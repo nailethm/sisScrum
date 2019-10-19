@@ -24,7 +24,8 @@ class HistoriaFormRequest extends Request
     public function rules()
     {
         return [
-            'idsprint'=>'required',
+            // 'idsprint'=>'required',
+            // 'idsprint'=>'required',
             'actor'=>'required|max:45',
             'requerimiento'=>'required|max:256',
             'funcionalidad'=>'required|max:256',

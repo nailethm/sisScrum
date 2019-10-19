@@ -43,31 +43,18 @@
                 <nav class="navbar navbar-default">
                     <div class="container">
                         <!-- Brand and toggle get grouped for better mobile display -->
-                        <div class="navbar-header">
-                            
+                        <div class="navbar-header">                            
                             <a class="logo" href="#"><img src="{{asset('img/logo.png')}}" /></a>
                         </div>
 
                         <!-- Collect the nav links, forms, and other content for toggling -->
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                            
+                            @if (auth()->check())
                             <ul class="nav navbar-right">
-                                
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Abraham Smith <i aria-hidden="true" class="fa fa-sort-desc"></i></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="#"><i class="fa fa-edit"></i> Mi perfil</a></li>
-                                        <li class="divider"></li>
-                                        <li><a href="#"><i class="fa fa-power-off"></i> Desconectarse</a></li>
-                                    </ul>
-                                </li>
+                                <li><a href="{{URL::action('UsuarioController@show', Auth::user()->id)}}"><i class="fa fa-user"></i> {{ Auth::user()->name }}</a></li>
+                                <li><a class="salir" href="{{url('/logout')}}"><i class="fa fa-power-off"></i></a></li>
                             </ul>
-                           <!--  <form class="navbar-form navbar-right" role="search">
-                                <div class="form-group">
-                                    <input type="text" class="form-control search-query" placeholder="Buscar">
-                                </div>
-
-                            </form> -->
+                            @endif
                         </div><!-- /.navbar-collapse -->
                     </div><!-- /.container-fluid -->
                 </nav>
@@ -76,21 +63,32 @@
                 <div class="subnavbar-inner">
 
                     <div class="container">
-                        <ul class="mainnav">
-                            <li><a href="dashboard.html"><i class="fa fa-dashboard"></i><span>Inicio</span> </a> </li>
-                            <li class="active"><a href="{{url('proyecto')}}"><i class="fa fa-folder-open"></i><span>Mis Proyectos</span> </a> </li>
-                            <li><a href="#"><i class="fa fa-list-alt"></i><span>Mis tareas</span> </a> </li>
-                            <li><a href="#"><i class="fa fa-inbox"></i><span>Mis mensajes</span> </a> </li>
-                      
-                        </ul>
-                        <div class="admin-tools">
-                            <!--<h4>Herramientas de Administración</h4>-->
-                            <ul class="admin-nav">
-                                <li class="a-proyecto active"><a href="dashboard.html"><i class="fa fa-folder"></i><span>Administrar Proyectos</span> </a> </li>
-                                <li class="a-usuario"><a href="#"><i class="fa fa-group"></i><span>Administrar Usuarios</span> </a> </li>
-                                <li class="a-sistema"><a href="#"><i class="fa fa-gears"></i><span>Administrar Sistema</span> </a> </li>
+                        <div class="col-md-4">
+                            <ul class="mainnav">
+                                <li class="@yield('home-selected')"><a href="{{url('home')}}"><i class="fa fa-dashboard"></i><span>Inicio</span> </a> </li>
+                                <li class="@yield('proyecto-selected')"><a href="{{url('proyectos')}}"><i class="fa fa-folder-open"></i><span>Proyectos</span> </a> </li>
+                                <li class="@yield('tarea-selected')"><a href="{{url('mistareas')}}"><i class="fa fa-list-alt"></i><span>Mis tareas</span> </a> </li>                            
                             </ul>
                         </div>
+                        <div class="col-md-5">
+                            @if(Auth::user()->isAdmin())
+                            <div class="admin-tools">
+                                <!--<h4>Herramientas de Administración</h4>-->
+                                <ul class="admin-nav">
+                                    <li class="a-proyecto active"><a href="{{url('seguridad/reportes')}}"><i class="fa fa-folder"></i><span>Administrar Reportes</span> </a> </li>
+                                    <li class="a-usuario"><a href="{{url('seguridad/usuario')}}"><i class="fa fa-group"></i><span>Administrar Usuarios</span> </a> </li>
+                                    <!-- <li class="a-sistema"><a href="#"><i class="fa fa-gears"></i><span>Administrar Sistema</span> </a> </li> -->
+                                </ul>
+                            </div>
+                            @endif    
+                        </div>
+                        <div class="col-md-3">
+                            <div class="current-date">
+                                <h6>Fecha y Hora Actual</h6>
+                                <strong> {{ Carbon\Carbon::now() }} </strong>
+                            </div>
+                        </div>
+                                                
                     </div>
                     <!-- /container -->
                 </div>
@@ -118,7 +116,7 @@
                                 <div id="my-calendar"></div>    
                             </div>
                         </div>
-                        <div class="panel panel-success">
+                        <!-- <div class="panel panel-success">
                             <div class="panel-heading">Equipo del Proyecto</div>
                             <div class="panel-body">
                                 <ul class="media-list">
@@ -177,8 +175,8 @@
                                     </li>
                                 </ul>
                             </div>
-                        </div>
-                        <div class="panel panel-warning">
+                        </div> -->
+                        <!-- <div class="panel panel-warning">
                             <div class="panel-heading">Actividades Recientes</div>
                             <div class="panel-body">
                                 <ul class="media-list"> 
@@ -200,7 +198,7 @@
                                     </li>                                
                                 </ul>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                
@@ -212,7 +210,7 @@
         <!--footer start-->
         <footer class="site-footer">
             <div class="text-center">
-                &copy; 2015 DREAMUP Corporation
+                &copy; 2019 DREAMUP Corporation
             </div>
         </footer>
         <!--footer end-->
@@ -242,10 +240,11 @@
 
 	<!--script for this page-->
 	<!--<script src="{{asset('js/sparkline-chart.js')}}"></script>-->
-    <script src="{{asset('js/chart-master/Chart.js')}}"></script>
+    <!--<script src="{{asset('js/chart-master/Chart.js')}}"></script>-->
 
     <script src="{{asset('js/general.js')}}"></script>
     <script src="{{asset('js/form-component.js')}}"></script>
+    @yield('scripts')
 
 </body>
 </html>

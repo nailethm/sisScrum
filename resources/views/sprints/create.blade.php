@@ -1,8 +1,9 @@
 @extends('layouts.admin')
 @section('contenido')
+    <h2>> Proyecto: <a href="{{URL::action('ProyectoController@show', $proyecto->idproyecto)}}"><strong class="text-uppercase">{{$proyecto->nombre}}</strong></a></h2>
 	<div class="panel panel-info">
     	<div class="panel-heading">
-    	    <h3 class="panel-title">Editar Proyecto: <strong>{{$proyecto->nombre}}</strong></h3>
+    	    <h3 class="panel-title">Nuevo Sprint</h3>
     	</div>
     	<div class="panel-body">
             @if (count($errors)>0)                        
@@ -14,35 +15,35 @@
                 </ul>    
             </div>
             @endif
-
-            {!!Form::model($proyecto,['method'=>'PATCH','route'=>['proyecto.update',$proyecto->idproyecto]])!!}
+            {!!Form::open(array('action'=>array('SprintController@store', $proyecto->idproyecto),'method'=>'post'))!!}
             {{Form::token()}}
+            <input type="hidden" name="idproy" class="form-control" value="{{$proyecto->idproyecto}}">
             <div class="form-group">
-                <label for="nombre">Nombre</label>
-                <input type="text" name="nombre" class="form-control" value="{{$proyecto->nombre}}" id="nombreProyecto" placeholder="">
+                <label for="titulo">Título</label>
+                <input type="text" name="titulo" class="form-control" placeholder="" value="Sprint #">
             </div>
             <div class="form-group">
-                <label for="descripcionProyecto">Descripción</label>
-                <textarea class="form-control" rows="3" name="descripcion">{{$proyecto->descripcion}}"</textarea>
+                <label for="nota">Nota</label>
+                <textarea class="form-control" rows="3" name="nota"></textarea>
             </div>
             <div class="row">
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label for="start_project">Inicio</label>
-                        <input type="text" name="inicio_proyecto" class="form-control" value="{{$proyecto->inicio_proyecto}}" id="start_project" placeholder="Inicio del Proyecto">
+                        <input type="text" name="inicio_sprint" class="form-control" id="start_project" placeholder="Inicio del Proyecto">
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label for="end_project">Fin</label>
-                        <input type="text" name="fin_proyecto" class="form-control" value="{{$proyecto->fin_proyecto}}" id="end_project" placeholder="">
+                        <input type="text" name="fin_sprint" class="form-control" id="end_project" placeholder="">
                     </div>
                 </div>
             </div>
             <button type="submit" class="btn btn-primary">Guardar</button>
-            <button type="reset" class="btn btn-danger">Cancelar</button>
+            <button type="reset" class="btn btn-danger">Borrar</button>
+            <a href="{{URL::previous()}}" class="btn btn-warning"><i class="fa fa-chevron-left"></i> Regresar</a>
             {!!Form::close()!!}    	                
-                
     	</div>
     </div>
 @stop

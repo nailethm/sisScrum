@@ -34,22 +34,16 @@ $(document).ready(function () {
         $(this).hide();
     });
 
-    $("#my-calendar").zabuto_calendar({
-        action: function () {
-            return myDateFunction(this.id, false);
-        },
-        action_nav: function () {
-            return myNavFunction(this.id);
-        },
-        ajax: {
-            url: "show_data.php?action=1",
-            modal: true
-        },
-        legend: [
-            {type: "text", label: "Special event", badge: "00"},
-            {type: "block", label: "Regular event", }
-        ]
+    
+    $("#preport").change(function () {
+        $('div.rbox1').hide();
+        $('div.rbox1.'+$(this).val()).show();
     });
+     $("#ureport").change(function () {
+        $('div.rbox2').hide();
+        $('div.rbox2.'+$(this).val()).show();
+    });
+
 });
 
 function myNavFunction(id) {

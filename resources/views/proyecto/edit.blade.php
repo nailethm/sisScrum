@@ -2,7 +2,7 @@
 @section('contenido')
 	<div class="panel panel-info">
     	<div class="panel-heading">
-    	    <h3 class="panel-title">Editar Proyecto: <strong>{{$proyecto->nombre}}</strong></h3>
+    	    <h3 class="panel-title">Editar Sprint: <strong>{{$proyecto->nombre}}</strong></h3>
     	</div>
     	<div class="panel-body">
             @if (count($errors)>0)                        
@@ -15,7 +15,7 @@
             </div>
             @endif
 
-            {!!Form::model($proyecto,['method'=>'PATCH','route'=>['proyecto.update',$proyecto->idproyecto]])!!}
+            {!!Form::model($proyecto,['method'=>'PATCH','route'=>['proyectos.update',$proyecto->idproyecto]])!!}
             {{Form::token()}}
             <div class="form-group">
                 <label for="nombre">Nombre</label>
@@ -23,7 +23,7 @@
             </div>
             <div class="form-group">
                 <label for="descripcionProyecto">Descripción</label>
-                <textarea class="form-control" rows="3" name="descripcion">{{$proyecto->descripcion}}"</textarea>
+                <textarea class="form-control" rows="3" name="descripcion">{{$proyecto->descripcion}}</textarea>
             </div>
             <div class="row">
                 <div class="col-lg-6">
@@ -40,7 +40,7 @@
                 </div>
             </div>
             <button type="submit" class="btn btn-primary">Guardar</button>
-            <button type="reset" class="btn btn-danger">Cancelar</button>
+            <a href="{{ url('/proyectos') }}" type="reset" class="btn btn-danger">Cancelar</a>
             {!!Form::close()!!}    	                
                 
     	</div>

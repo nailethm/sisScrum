@@ -8,75 +8,92 @@ use sisScrum\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
 use sisScrum\Http\Requests\HistoriaFormRequest;
+
 use sisScrum\Historia;
 use sisScrum\Sprint;
 use sisScrum\Proyecto;
+use sisScrum\Backlog;
+use sisScrum\Tarea;
+use sisScrum\AvanceTarea;
 use DB;
+use Auth;
+
+use Carbon\Carbon;
+use Response;
+use Illuminate\Support\Collection;
 
 class HistoriaController extends Controller
 {
     public function __construct()
     {
-
+        $this->middleware('auth');
     }
-    public function index(Request $request)
+    public function create($idp)
     {
-    	if ($request)
-    	{
-    		$query=trim($request->get('searchText'));
-    		$historias=DB::table('historia as h')
-    		->join('sprint as s','h.idsprint','=','s.idsprint')
-    		->join('proyecto as p','p.idproyecto','=','s.idproyecto')
-    		->select('h.idhistoria','s.idsprint','h.actor','h.requerimiento','h.funcionalidad','h.prioridad','h.notas','h.estado','h.fecha_creacion','p.nombre')
-    		->where('requerimiento','LIKE','%'.$query.'%')
-            ->where('estado','=','1')
-            ->orderBy('prioridad','desc')
+        return view("historias.create",["proyecto"=>Proyecto::findOrFail($idp)]);
+    }
+    public function store(HistoriaFormRequest $request, $idp)
+    {
+        $backlog=Backlog::where('idproyecto','=',$idp)->first();
+        $idbacklog=$backlog->idbacklog;
+        // Falta agragegar el id del usuario, e actualizar el idsprint
+        $historia=new Historia;
+        $historia->idbacklog=$idbacklog;
+        $historia->idusuario=Auth::user()->id;
+        $historia->actor=$request->get('actor');
+        $historia->requerimiento=$request->get('requerimiento');
+        $historia->funcionalidad=$request->get('funcionalidad');
+        $historia->prioridad=$request->get('prioridad');
+        $historia->notas=$request->get('notas');
+        $historia->estado='1';
+        $mifecha = Carbon::now();
+        $historia->fecha_creacion= $mifecha->toDateString();
+        $historia->save();
+        return Redirect::to('proyectos/'.$idp.'/backlog');
+    }
+    public function show($idp, $idh)
+    {
+        $tareas = Tarea::where('idhistoria','=',$idh)
+            ->where('estado','<>','0')
+            ->orderBy('idtarea','desc')
             ->paginate(7);
-    		return view('historia.index',["historias"=>$historias,"searchText"=>$query]);	
-    	}
+
+        $totalTareas = Tarea::where('idhistoria','=',$idh)
+            ->where('estado','<>','0')->count();
+        $tareasCompletadas=Tarea::where('idhistoria','=',$idh)
+            ->where('estado','=','3')->count();
+        if ($totalTareas<>0 && $totalTareas==$tareasCompletadas) {
+            $historia=Historia::findOrFail($idh);
+            $historia->estado='3';
+            $historia->update();
+        }
+        $proyecto = Proyecto::findOrFail($idp);
+        $historia=Historia::findOrFail($idh);        
+        
+        return view("historias.show")->with(compact('tareas', 'proyecto', 'historia'));
     }
-    public function create()
+    public function edit($idp, $idh)
     {
-    	return view("proyecto.create");
+        $proyecto=Proyecto::where('idproyecto','=',$idp)->first();
+
+        return view("historias.edit",["proyecto"=>$proyecto,"historia"=>Historia::findOrFail($idh)]);
     }
-    public function store(ProyectoFormRequest $request)
+    public function update(HistoriaFormRequest $request,$idp,$idh)
     {
-    	$proyecto=new Proyecto;
-    	$proyecto->nombre=$request->get('nombre');
-    	$proyecto->descripcion=$request->get('descripcion');
-        // $ifecha=Carbon::createFromFormat('d-m-Y', $request->inicio_proyecto)->toDateString();
-        // $ifecha=$proyecto->inicio_proyecto;
-        // $ffecha=Carbon::createFromFormat('d-m-Y', $request->fin_proyecto)->toDateString();
-        // $ffecha=$proyecto->fin_proyecto;
-    	$proyecto->inicio_proyecto=$request->get('inicio_proyecto');
-    	$proyecto->fin_proyecto=$request->get('fin_proyecto');
-    	$proyecto->estado='1';
-    	$proyecto->save();
-    	return Redirect::to('proyecto');
+        $historia=Historia::findOrFail($idh);
+        $historia->actor=$request->get('actor');
+        $historia->requerimiento=$request->get('requerimiento');
+        $historia->funcionalidad=$request->get('funcionalidad');
+        $historia->prioridad=$request->get('prioridad');
+        $historia->notas=$request->get('notas');
+        $historia->update();
+        return Redirect::to('proyectos/'.$idp.'/backlog');
     }
-    public function show($id)
+    public function destroy($idp,$idh)
     {
-    	return view("proyecto.show",["proyecto"=>Proyecto::findOrFail($id)]);
-    }
-    public function edit($id)
-    {
-    	return view("proyecto.edit",["proyecto"=>Proyecto::findOrFail($id)]);
-    }
-    public function update(ProyectoFormRequest $request,$id)
-    {
-    	$proyecto=Proyecto::findOrFail($id);
-    	$proyecto->nombre=$request->get('nombre');
-    	$proyecto->descripcion=$request->get('descripcion');
-    	$proyecto->inicio_proyecto=$request->get('inicio_proyecto');
-    	$proyecto->fin_proyecto=$request->get('fin_proyecto');
-    	$proyecto->update();
-    	return Redirect::to('proyecto');
-    }
-    public function destroy($id)
-    {
-    	$proyecto=Proyecto::findOrFail($id);
-    	$proyecto->estado='0';
-    	$proyecto->update();
-    	return Redirect::to('proyecto');
+        $historia=Historia::findOrFail($idh);
+        // $historia->estado='0';
+        $historia->delete();
+        return Redirect::to('proyectos/'.$idp.'/backlog');
     }
 }

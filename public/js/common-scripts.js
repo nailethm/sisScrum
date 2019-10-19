@@ -1,21 +1,21 @@
 /*---LEFT BAR ACCORDION----*/
 $(function() {
     $("#my-calendar").zabuto_calendar({
-                action: function () {
-                    return myDateFunction(this.id, false);
-                },
-                action_nav: function () {
-                    return myNavFunction(this.id);
-                },
-                ajax: {
-                    url: "show_data.php?action=1",
-                    modal: true
-                },
-                legend: [
-                    {type: "text", label: "Special event", badge: "00"},
-                    {type: "block", label: "Regular event", }
-                ]
-            });
+        action: function () {
+            return myDateFunction(this.id, false);
+        },
+        action_nav: function () {
+            return myNavFunction(this.id);
+        },
+        ajax: {
+            url: "show_data.php?action=1",
+            modal: true
+        },
+        legend: [
+            {type: "text", label: "Evento Especial", badge: "00"},
+            {type: "block", label: "Evento Regular", }
+        ]
+    });
 });
 
 var Script = function () {

@@ -15,7 +15,7 @@
             </div>
             @endif
 
-            {!!Form::open(array('url'=>'proyecto','method'=>'POST','autocomplete'=>'off'))!!}
+            {!!Form::open(array('url'=>'proyectos','method'=>'POST','autocomplete'=>'off'))!!}
             {{Form::token()}}
             <div class="form-group">
                 <label for="nombre">Nombre</label>
@@ -40,7 +40,8 @@
                 </div>
             </div>
             <button type="submit" class="btn btn-primary">Guardar</button>
-            <button type="reset" class="btn btn-danger">Cancelar</button>
+            <button type="reset" class="btn btn-danger">Borrar</button>
+            <a href="{{URL::previous()}}" class="btn btn-warning"><i class="fa fa-chevron-left"></i> Regresar</a>
             {!!Form::close()!!}    	                
     	</div>
     </div>
