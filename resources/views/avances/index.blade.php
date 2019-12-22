@@ -14,6 +14,13 @@
 	<div class="panel panel-info">
     	<div class="panel-heading">
     	    <h3 class="panel-title">Avances de la tarea</strong></h3>
+            <div class="small-tools">
+                <ul>                    
+                    <li>
+                        <a target="_blank" href="{{URL::action('PdfController@reporteAvances', $tarea->idtarea)}}" class="btn btn-default btn-xs tooltips pull-right" data-placement="bottom" data-original-title="Imprimir"><i class="fa fa-print"></i></a> 
+                    </li>
+                </ul>
+            </div>
     	</div>
     	<div class="panel-body">
             <div class="panel task-box center-block">

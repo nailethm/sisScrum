@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        <title>Usuarios</title>
+        <title>Pila del Producto</title>
         <style type="text/css">                        
           
             body{
@@ -80,46 +80,64 @@
         </footer>
         <div id="details" class="clearfix">
             <div>
-                <h2>Datos de Usuario</h2>
+                <h2>Tareas del Proyecto</h2>
                 <table border="0" cellspacing="0" cellpadding="0">
                     <tr>
-                        <td width="20%"></td>
-                        <td width="40%">
-                            <p><strong>Nombre:</strong> {{ $data1->name }}</p>
+                        <td width="16%"></td>
+                        <td width="42%">
+                            <p><strong>Proyecto:</strong> {{ $data2->nombre }} </p>                            
                             <p><strong>Fecha y Hora Actual:</strong> {{ Carbon\Carbon::now() }} </p>    
                         </td>
-                        <td width="40%">
-                            <p><strong>CI:</strong> {{ $data1->CI }}</p>
-                            <p><strong>Cargo:</strong> {{ $data1->occupation }}</p>   
+                        <td width="42%">
+                            <p><strong>Scrum Master:</strong> {{ $data3->where('rol','SM')->first()->usuario->name }} </p>
+                            <p><strong>Dueño Producto:</strong> {{ $data3->where('rol','DP')->first()->usuario->name }} </p>   
                         </td>
                     </tr>
-                </table>                                                
+                </table>
+                                
             </div>
         </div>
-        <h3>Proyectos Asignados:</h3>
-        <table border="1" cellspacing="0" cellpadding="0">
+        <table border="1" cellspacing="0" cellpadding="0" style="background: rgba(230,230,230,0.5);">
             <thead>
                 <tr>
-                    <th width="2%">#</th>
-                    <th width="49%">Proyecto</th>
-                    <th width="10%">Estado</th>
-                    <th width="12%">Inicio</th>
-                    <th width="12%">Fin</th>
-                    <th width="15%">Rol Asignado</th>                                       
+                    <th width="3%">#</th> 
+                    <th width="55%">Historia</th> 
+                    <th width="10%">Prioridad</th>
+                    <th width="15%">Estado</th>
+                    <th width="17%">Fecha cración</th>                                                               
                 </tr>
             </thead>
-            <tbody>
-                @foreach ($data2 as $key => $proy)                
+            <tbody> 
                 <tr>
-                    <td>{{ $key+1 }}</td>
-                    <td>{{ $proy->proyecto->nombre }}</td>
-                    <td>{{ $proy->proyecto->porcentaje_proyecto }}%</td>
-                    <td>{{ $proy->proyecto->inicio_proyecto }}</td>
-                    <td>{{ $proy->proyecto->fin_proyecto }}</td>
-                    <td>{{ $proy->nombre_rol }}</td>                                                     
-                </tr>
-                @endforeach
+                    <td><strong>H{{ $data1->idhistoria }}</strong></td>   
+                    <td>Como <strong>{{ $data1->actor }}</strong> necesito <strong>{{ $data1->requerimiento }}</strong> así podré <strong>{{ $data1->funcionalidad }}</strong></td>                                             
+                    <td>{{ $data1->prioridad }}</td>
+                    <td>{{ $data1->nombre_estado_historia }}</td>
+                    <td>{{ $data1->fecha_creacion }}</td>
+                </tr>                    
             </tbody>            
-        </table>        
+        </table>
+        <table border="1" cellspacing="0" cellpadding="0"> 
+            <thead> 
+                <tr> 
+                    <th width="3%">#</th> 
+                    <th width="40%">Tarea</th> 
+                    <th width="17%">Asignado a</th> 
+                    <th width="10%">Dificultad <span>1 a 5</span></th>
+                    <th width="15%">Estado</th>
+                </tr> 
+            </thead> 
+            <tbody> 
+                @foreach ($data1->tareas()->where('estado','<>','0')->get() as $key => $tarea) 
+                <tr>
+                    <td>{{ $key+1 }}</td>   
+                    <td>{{ $tarea->titulo }}</td>                                              
+                    <td>{{ $tarea->usuario->name }}</td>
+                    <td>{{ $tarea->dificultad }}</td>                        
+                    <td>{{ $tarea->porcentaje_tarea }}%</td>                        
+                </tr>                       
+                @endforeach                     
+            </tbody> 
+        </table>
     </body>
 </html>

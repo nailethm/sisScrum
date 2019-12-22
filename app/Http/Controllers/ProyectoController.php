@@ -25,11 +25,11 @@ class ProyectoController extends Controller
     	// dd($request);
         if ($request)
     	{
-    		$query=trim($request->get('searchText'));
+    		$query=trim($request->get('searchText'));            
     		$proyectos=Proyecto::where('nombre','LIKE','%'.$query.'%')
             ->where('estado','<>','0')
             ->orderBy('idproyecto','desc')
-            ->paginate(7);
+            ->paginate(7);            
             $searchText = $query;
     		return view('proyecto.index')->with(compact('proyectos','searchText'));	
     	}

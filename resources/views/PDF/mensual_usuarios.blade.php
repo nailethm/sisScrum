@@ -2,12 +2,12 @@
 <html lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        <title>Usuarios</title>
+        <title>Avances de la Tarea</title>
         <style type="text/css">                        
           
             body{
                 background: url("/img/default-img.jpg") no-repeat top left;
-                font-family: sans-serif;
+                font-family: sans-serif;                
             }
             @page {
               margin: 30px 30px;
@@ -18,8 +18,12 @@
                 text-transform: uppercase;
                 color: #337ab7;
             }
+            p{
+                text-transform: uppercase;
+            }
             .subtitle{                
                 text-align: center;
+                text-transform: uppercase;
             }
             table{
                 width: 100%;
@@ -37,7 +41,7 @@
               left: 0px;
               bottom: -10px;
               right: 0px;
-              height: 40px;
+              height: 45px;
               border-bottom: 2px solid #ddd;
             }
             footer .page:after {
@@ -47,10 +51,13 @@
               width: 100%;
             }
             footer p {
-              text-align: right;
+              text-align: center;
             }
             footer .izq {
               text-align: left;
+            }
+            footer .der {
+              text-align: right;
             }
         </style>
     </head>
@@ -58,13 +65,16 @@
         <footer>
             <table>
                 <tr>
-                    <td>
+                    <td width="34%">
                         <p class="izq">DreamupCorp.com</p>
                     </td>
-                    <td>
+                    <td width="32%">
                     <p class="page">
                         Página
                     </p>
+                    </td>
+                    <td width="34%">
+                        <p class="der">{{ Carbon\Carbon::now() }}</p>
                     </td>
                 </tr>
             </table>
@@ -72,33 +82,47 @@
         <div id="details" class="clearfix">
             <div>
                 <h2>LISTADO DE USUARIOS</h2>
-                <div class="subtitle">del mes </div>
-                <p><strong>Fecha y Hora:</strong> {{ Carbon\Carbon::now() }} </p>                
+                <div class="subtitle">DEL MES DE <strong> {{ $data3 }} </strong></div>
+                <table border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td width="16%"></td>
+                        <td>
+                                                                
+                        </td>
+                        <td>                            
+                            <p><strong>Fecha Actual:</strong> {{ Carbon\Carbon::now() }} </p>       
+                        </td>
+                    </tr>
+                </table>
+                <hr>                
             </div>
-        </div>
+        </div>        
+        <h3>Personal Activo:</h3>
         <table border="1" cellspacing="0" cellpadding="0">
             <thead>
                 <tr>
                     <th width="2%">#</th>
-                    <th width="15%">Fecha Registro</th>
-                    <th width="20%">Nombre</th>
-                    <th width="13%">CI</th>
-                    <th width="20%">Email</th>
+                    <th width="10%">Fecha</th>
+                    <th width="28%">Nombre</th>
+                    <th width="10%">CI</th>
+                    <th width="25%">Email</th>
                     <th width="10%">Celular</th>
-                    <th width="20%">Cargo</th>                    
+                    <th width="15%">Cargo</th>                    
                 </tr>
             </thead>
             <tbody>
-                @foreach ($data1 as $key => $usuario) 
+                @foreach ($data1 as $key => $usuario)
+                    @if( $usuario->updated_at->format('m')==$data2 ) 
                     <tr>
-                        <td width="2%">{{ $key+1 }}</td>
-                        <td width="15%">{{ $usuario->created_at }}</td>
-                        <td width="20%">{{ $usuario->name }}</td>
-                        <td width="13%">{{ $usuario->CI }}</a></td>
-                        <td width="20%">{{ $usuario->email }}</td>
-                        <td width="10%">{{ $usuario->phone }}</td>
-                        <td width="20%">{{ $usuario->occupation }}</a></td>
-                    </tr>                    
+                        <td>{{ $key+1 }}</td>
+                        <td>{{ $usuario->updated_at->format('m/d/Y') }}</td>
+                        <td>{{ $usuario->name }}</td>
+                        <td>{{ $usuario->CI }}{{ $usuario->issued }}</a></td>
+                        <td>{{ $usuario->email }}</td>
+                        <td>{{ $usuario->phone }}</td>
+                        <td>{{ $usuario->occupation }}</a></td>
+                    </tr>
+                    @endif                    
                 @endforeach
             </tbody>            
         </table>

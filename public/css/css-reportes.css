@@ -1,0 +1,14 @@
+h2{
+    margin-bottom: 0px;
+    text-align: center;
+}
+.subtitle{                
+    text-align: center;
+}
+table{
+    width: 100%;
+}
+table tr th,
+table tr td{
+    padding: 5px;
+}

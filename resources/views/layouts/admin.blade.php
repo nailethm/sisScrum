@@ -12,6 +12,8 @@
     <link rel="Shortcut Icon" href="{{asset('favicon.ico')}}">
     <!-- Bootstrap core CSS -->
     <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
+    <!-- Bootstrap core CSS -->
+    <link href="{{asset('css/bootstrap-select.min.css')}}" rel="stylesheet">
     <!--external css-->
     <link href="{{asset('css/font-awesome/css/font-awesome.css')}}" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="{{asset('css/zabuto_calendar.css')}}">
@@ -61,34 +63,26 @@
             </div>
             <div class="subnavbar">
                 <div class="subnavbar-inner">
-
                     <div class="container">
-                        <div class="col-md-4">
-                            <ul class="mainnav">
-                                <li class="@yield('home-selected')"><a href="{{url('home')}}"><i class="fa fa-dashboard"></i><span>Inicio</span> </a> </li>
-                                <li class="@yield('proyecto-selected')"><a href="{{url('proyectos')}}"><i class="fa fa-folder-open"></i><span>Proyectos</span> </a> </li>
-                                <li class="@yield('tarea-selected')"><a href="{{url('mistareas')}}"><i class="fa fa-list-alt"></i><span>Mis tareas</span> </a> </li>                            
-                            </ul>
-                        </div>
-                        <div class="col-md-5">
-                            @if(Auth::user()->isAdmin())
+                        <ul class="mainnav">
+                            <li class="@yield('home-selected')"><a href="{{url('home')}}"><i class="fa fa-dashboard"></i><span>Inicio</span> </a> </li>
+                            <li class="@yield('proyecto-selected')"><a href="{{url('proyectos')}}"><i class="fa fa-folder-open"></i><span>Proyectos</span> </a> </li>
+                            <li class="@yield('tarea-selected')"><a href="{{url('mistareas')}}"><i class="fa fa-list-alt"></i><span>Mis tareas</span> </a> </li>                            
+                        </ul>
+                        @if(auth()->check() && Auth::user()->isAdmin())
                             <div class="admin-tools">
                                 <!--<h4>Herramientas de Administración</h4>-->
                                 <ul class="admin-nav">
-                                    <li class="a-proyecto active"><a href="{{url('seguridad/reportes')}}"><i class="fa fa-folder"></i><span>Administrar Reportes</span> </a> </li>
-                                    <li class="a-usuario"><a href="{{url('seguridad/usuario')}}"><i class="fa fa-group"></i><span>Administrar Usuarios</span> </a> </li>
+                                    <li class="a-proyecto @yield('reportes-selected')"><a href="{{url('seguridad/reportes')}}"><i class="fa fa-folder"></i><span>Administrar Reportes</span> </a> </li>
+                                    <li class="a-usuario @yield('usuarios-selected')"><a href="{{url('seguridad/usuario')}}"><i class="fa fa-group"></i><span>Administrar Usuarios</span> </a> </li>
                                     <!-- <li class="a-sistema"><a href="#"><i class="fa fa-gears"></i><span>Administrar Sistema</span> </a> </li> -->
                                 </ul>
                             </div>
-                            @endif    
-                        </div>
-                        <div class="col-md-3">
-                            <div class="current-date">
-                                <h6>Fecha y Hora Actual</h6>
-                                <strong> {{ Carbon\Carbon::now() }} </strong>
-                            </div>
-                        </div>
-                                                
+                        @endif
+                        <div class="current-date">
+                            <h6>Fecha y Hora Actual</h6>
+                            <strong> {{ Carbon\Carbon::now() }} </strong>
+                        </div>                                                                    
                     </div>
                     <!-- /container -->
                 </div>
@@ -101,22 +95,22 @@
         <section class="wrapper">
             <div class="container">
                 <!-- Main Container start -->
-                <div class="row">
-                    <div class="col-lg-9">
+                <!-- <div class="row">
+                    <div class="col-lg-9"> -->
                         <div class="main-content"> 
                         <!-- Contenido -->
                         @yield('contenido')
                         <!-- Fin Contenido -->
                         </div>
                     </div>
-                    <div class="col-lg-3 sidebar-content">
+                    <!--<div class="col-lg-3 sidebar-content">
                         <div class="panel panel-danger">
                             <div class="panel-heading">Eventos</div>
                             <div class="panel-body">
                                 <div id="my-calendar"></div>    
                             </div>
                         </div>
-                        <!-- <div class="panel panel-success">
+                         <div class="panel panel-success">
                             <div class="panel-heading">Equipo del Proyecto</div>
                             <div class="panel-body">
                                 <ul class="media-list">
@@ -198,9 +192,9 @@
                                     </li>                                
                                 </ul>
                             </div>
-                        </div> -->
-                    </div>
-                </div>
+                        </div> 
+                    </div> 
+                </div> -->
                
                 
                     <!-- Main Container End -->
@@ -219,6 +213,10 @@
 	<!-- js placed at the end of the document so the pages load faster -->
     <script src="{{asset('js/jquery-3.1.1.min.js')}}"></script>
     <script src="{{asset('js/bootstrap.min.js')}}"></script>
+    <script src="{{asset('js/jspdf.debug.js')}}"></script>
+    <script src="{{asset('js/jspdf.plugin.autotable.js')}}"></script>
+    <script src="{{asset('js/html2canvas.js')}}"></script>
+    <script src="{{asset('js/bootstrap-select.min.js')}}"></script>
 
 	<!--common script for all pages-->
 	<script src="{{asset('js/zabuto_calendar.js')}}"></script>
@@ -237,10 +235,6 @@
 
     <!--custom checkbox & radio-->
     <script type="text/javascript" src="{{asset('js/bootstrap-inputmask/bootstrap-inputmask.min.js')}}"></script>
-
-	<!--script for this page-->
-	<!--<script src="{{asset('js/sparkline-chart.js')}}"></script>-->
-    <!--<script src="{{asset('js/chart-master/Chart.js')}}"></script>-->
 
     <script src="{{asset('js/general.js')}}"></script>
     <script src="{{asset('js/form-component.js')}}"></script>

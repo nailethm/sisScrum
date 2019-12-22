@@ -28,6 +28,10 @@ class User extends Authenticatable
     {
         return $this->hasMany('sisScrum\Tarea','idusuario','id');
     }
+    public function historia()
+    {
+        return $this->hasOne('sisScrum\Historia','idusuario','id');
+    }
     public function isAdmin()
     {        
         return (\Auth::check() && $this->admin == 1);

@@ -18,7 +18,7 @@
             <div class="small-tools">
             	<ul>            		
             		<li>
-		            	<a target="_blank" href="" class="btn btn-default btn-xs tooltips pull-right" data-placement="bottom" data-original-title="Imprimir"><i class="fa fa-print"></i></a>	
+		            	<a target="_blank" href="{{URL::action('PdfController@reportePilaProducto', $proyecto->idproyecto)}}" class="btn btn-default btn-xs tooltips pull-right" data-placement="bottom" data-original-title="Imprimir"><i class="fa fa-print"></i></a>	
             		</li>
             	</ul>
             </div> 

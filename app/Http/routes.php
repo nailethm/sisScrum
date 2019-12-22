@@ -14,6 +14,7 @@
 Route::get('/', function () {
     return view('auth/login');
 });
+Route::auth();
 Route::get('/home', 'HomeController@index');
 Route::get('/mistareas', 'HomeController@mistareas');
 
@@ -56,10 +57,16 @@ Route::delete('/proyectos/{idproyecto}/tareas/{idtarea}/avances/{idavance}', 'Av
 
 Route::resource('seguridad/usuario','UsuarioController');
 
-Route::get('reporte/usuarios/{id}/pdf', 'PdfController@reporteUsuario');
-	Route::post('reporte/usuarios/pdf', 'PdfController@reporteUsuarios');
+Route::get('reporte/usuarios/{idusuario}/pdf', 'PdfController@reporteUsuario');
+Route::get('reporte/sprints/{idsprint}/pdf', 'PdfController@reportePilaSprint');
+// Route::get('reporte/sprints/{idsprint}/burndown/pdf', 'PdfController@reporteBurnDownSprint');
+Route::get('reporte/historias/{idhistoria}/pdf', 'PdfController@reporteTareas');
+Route::get('reporte/tareas/{idtarea}/pdf', 'PdfController@reporteAvances');
+Route::get('reporte/backlog/{idproyecto}/pdf', 'PdfController@reportePilaProducto');
+Route::post('reporte/usuarios/pdf', 'PdfController@reporteUsuarios');
+Route::post('reporte/proyectos/pdf', 'PdfController@reporteProyectos');
 Route::get('seguridad/reportes', 'PdfController@index');
-	Route::get('reporte/proyectos/pdf', 'PdfController@reporteProyectos');
+	// Route::get('reporte/proyectos/pdf', 'PdfController@reporteProyectos');
 
 Route::get('/proyectos/{idproyecto}/participantes', 'AsignadoController@index');
 Route::post('/proyectos/{idproyecto}/participantes', 'AsignadoController@store');
@@ -67,4 +74,3 @@ Route::delete('/proyectos/{idproyecto}/participantes/{idasignado}', 'AsignadoCon
 
 // Route::get('pdf', 'PdfController@invoice');
 
-Route::auth();

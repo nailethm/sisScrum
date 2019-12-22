@@ -4,6 +4,13 @@
 	<div class="panel panel-info">
         <div class="panel-heading">
             <h3 class="panel-title"><span>{{$sprint->titulo}}</span> - Historias</h3>
+            <div class="small-tools">
+                <ul>                    
+                    <li>
+                        <a target="_blank" href="{{URL::action('PdfController@reportePilaSprint', $sprint->idsprint)}}" class="btn btn-default btn-xs tooltips pull-right" data-placement="bottom" data-original-title="Imprimir"><i class="fa fa-print"></i></a> 
+                    </li>
+                </ul>
+            </div>
         </div>
         <div class="panel-body">
             <div class="row">

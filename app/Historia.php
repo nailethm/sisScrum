@@ -30,6 +30,10 @@ class Historia extends Model
 
     ];
 
+    public function usuario()
+    {
+        return $this->belongsTo('sisScrum\User', 'idusuario');
+    }
     public function backlog()
     {
         return $this->belongsTo('sisScrum\Backlog', 'idbacklog', 'idbacklog');
@@ -57,9 +61,12 @@ class Historia extends Model
     }
     public function getPorcentajeHistoriaAttribute()
     {
-        $sumht=$this->avances()->sum('htrabajada');
-        $total_estimadas=$this->testimado;
-        $porcentaje_completado=($sumht*100)/$total_estimadas;
+        $totalTareasHistoria = $this->tareas()->where('estado','<>','0')->count();        
+        if ($totalTareasHistoria == '0') {
+            return '0';  //Cuando todavía no tiene historias
+        }
+        $totalTareasC = $this->tareas()->where('estado','3')->count();
+        $porcentaje_completado=($totalTareasC*100)/$totalTareasHistoria;
 
         return number_format((float)$porcentaje_completado, 0, '.', '');
     }

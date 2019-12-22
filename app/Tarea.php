@@ -47,6 +47,9 @@ class Tarea extends Model
     public function getPorcentajeTareaAttribute()
     {
         $sumht=$this->avances()->sum('htrabajada');
+        if ($sumht == '0') {
+            return '0';  //Cuando todavía no tiene historias
+        }
         $total_estimadas=$this->testimado;
         $porcentaje_completado=($sumht*100)/$total_estimadas;
 

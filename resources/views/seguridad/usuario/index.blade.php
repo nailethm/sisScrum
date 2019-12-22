@@ -30,7 +30,9 @@
 		            <tr>
 		                <th>Id</th>
 		                <th><i class="fa fa-bullhorn"></i> Nombre</th>
-		                <th><i class="fa fa-question-circle"></i> Email</th>		                		                
+		                <th><i class="fa fa-bullhorn"></i> Cargo</th>
+		                <th><i class="fa fa-question-circle"></i> Email</th>
+		                <th><i class="fa fa-question-circle"></i> Celular</th>		                		                
 		                <th><i class="fa fa-cogs"></i> Opciones</th>
 		            </tr>
 		            </thead>
@@ -39,7 +41,9 @@
 			            <tr>
 			                <td>{{ $usuario->id }}</td>
 			                <td><a href="{{URL::action('UsuarioController@show',$usuario->id)}}">{{ $usuario->name }}</a></td>
-			                <td>{{ $usuario->email }}</td>			                
+			                <td>{{ $usuario->occupation }}</td>
+			                <td>{{ $usuario->email }}</td>
+			                <td>{{ $usuario->phone }}</td>			                
 			                <td>
 			                	<a href="{{URL::action('UsuarioController@show',$usuario->id)}}" class="btn btn-info btn-xs tooltips" data-placement="top" data-original-title="Más"><i class="fa fa-search"></i></a>
 		                        <a href="{{URL::action('UsuarioController@edit',$usuario->id)}}" class="btn btn-primary btn-xs tooltips" data-placement="top" data-original-title="Editar"><i class="fa fa-pencil"></i></a>
@@ -61,7 +65,9 @@
 		            <tr>
 		                <th>Id</th>
 		                <th><i class="fa fa-bullhorn"></i> Nombre</th>
-		                <th><i class="fa fa-question-circle"></i> Email</th>		                		                
+		                <th><i class="fa fa-bullhorn"></i> Cargo</th>
+		                <th><i class="fa fa-question-circle"></i> Email</th>
+		                <th><i class="fa fa-question-circle"></i> Celular</th>		                		                
 		                <th><i class="fa fa-cogs"></i> Opciones</th>
 		            </tr>
 		            </thead>
@@ -70,7 +76,9 @@
 			            <tr>
 			                <td>{{ $uinactivo->id }}</td>
 			                <td><a href="{{URL::action('UsuarioController@show',$uinactivo->id)}}">{{ $uinactivo->name }}</a></td>
-			                <td>{{ $uinactivo->email }}</td>			                
+			                <td>{{ $uinactivo->occupation }}</td>
+			                <td>{{ $uinactivo->email }}</td>
+			                <td>{{ $uinactivo->phone }}</td>			                
 			                <td>
 			                	<a href="{{URL::action('UsuarioController@show',$usuario->id)}}" class="btn btn-info btn-xs tooltips" data-placement="top" data-original-title="Más"><i class="fa fa-search"></i></a>
 		                        <a href="{{URL::action('UsuarioController@edit',$uinactivo->id)}}" class="btn btn-primary btn-xs tooltips" data-placement="top" data-original-title="Editar"><i class="fa fa-pencil"></i></a>

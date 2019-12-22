@@ -175,6 +175,12 @@ hr {
   border-top: 1px solid #797979;
 }
 
+.color1 i{
+    color: rgba(233,79,39,0.8)!important;
+}
+.color2 i{
+    color: rgba(1,125,194,0.8)!important;
+}
 
 
 /*Helpers*/
@@ -393,9 +399,9 @@ ul.top-menu > li > .logout {
 /* Menu administrador*/
 .subnavbar .admin-tools ul {
     display: inline-block;
-    float: right;
+    float: left;
     margin: 0;
-    padding: 0;
+    padding: 0 0 0 5px;
 }
 .subnavbar .admin-tools h4{
     margin: 5px 0 0;
@@ -432,6 +438,7 @@ ul.top-menu > li > .logout {
     border: 1px solid transparent;
     border-radius: 4px;
 }
+.subnavbar .admin-tools .admin-nav li.active a,
 .subnavbar .admin-tools .admin-nav li a:hover{
     opacity: 0.8;
 }
@@ -619,7 +626,7 @@ ul.sidebar-menu li a.active i {
 }
 
 /* MAIN CONTENT CONFIGURATION */
-#main-content {
+.main-content {
 /*margin-left: 180px;*/
 min-height: 600px;
 }
@@ -684,9 +691,10 @@ background-color: #1bb6eb;
 .header .current-date{    
     padding: 5px;
     margin: 5px 0 0 40px;
-    width: 75%;
+    width: 20%;
     height: auto;
     overflow: hidden;
+    float: right;
     border: 1px solid #d9d9d9;
     border-radius: 5px 5px;
     font-size: 14px;
@@ -1025,8 +1033,6 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
     border-top-color: #68dff0 !important;
 }
 
-
-
 /*--sidebar toggle---*/
 
 .sidebar-toggle-box {
@@ -1130,7 +1136,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 }
 
 .box1 {
-	padding: 15px;
+	/*padding: 15px;*/
 	text-align: center;
 	color: #111;
 	border-bottom: 1px solid #111;
@@ -2692,8 +2698,8 @@ background: #fffbcc !important;
 .form-group{
     margin-bottom: 15px;
     display: block;
-    height: auto;
-    overflow: hidden;
+    /*height: auto;
+    overflow: hidden;*/
 }
 form h5{
     color: #1bb6eb;

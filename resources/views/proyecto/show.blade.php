@@ -8,7 +8,7 @@
             <a href="{{URL::action('AsignadoController@index',$proyecto->idproyecto)}}" class="btn btn-default btn-lg btn-block"><i class="fa fa-users"></i> Equipo</a>
         </div>
         <div class="btn-group">
-            <a href="{{URL::action('BacklogController@index',$proyecto->idproyecto)}}" class="btn btn-default btn-lg btn-block"><i class="fa fa-list"></i> Backlog</a>    
+            <a href="{{URL::action('BacklogController@index',$proyecto->idproyecto)}}" class="btn btn-default btn-lg btn-block"><i class="fa fa-list"></i> Pila Producto</a>    
         </div>
         <div class="btn-group">
             <a href="{{URL::action('SprintController@index',$proyecto->idproyecto)}}" class="btn btn-default btn-lg btn-block"><i class="fa fa-tasks"></i> Sprints</a>    

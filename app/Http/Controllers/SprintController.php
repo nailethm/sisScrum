@@ -131,7 +131,7 @@ class SprintController extends Controller
             return view("sprints.chartjs")->with(compact('proyecto','TRT','dias', 'curvaIdeal', 'curvaReal'));
         }
         while ($inicioSprint->lte($finSprint)){
-            $dias[] = $inicioSprint->format('d'); //$month = array('Jan', 'Feb', 'Mar', 'Apr', 'May');              
+            $dias[] = $inicioSprint->format('d-m'); //$month = array('Jan', 'Feb', 'Mar', 'Apr', 'May');              
             $sumaReal = 0;          
             foreach ($historias as $historia) {
                 $tareas=$historia->tareas()->where('estado','<>','0')->get();//Seleccionar tareas DONDE su estado es diferente de 0
@@ -146,8 +146,8 @@ class SprintController extends Controller
             $curvaReal[] = $HER;                        
             $inicioSprint->addDay();//Actualiza $starSprint con la fecha del ciclo
         }
-        
-        return view("sprints.chartjs")->with(compact('proyecto','TRT','dias', 'curvaIdeal', 'curvaReal'));
+        // dd(count($curvaReal));
+        return view("sprints.chartjs")->with(compact('proyecto','TRT','dias', 'curvaIdeal', 'curvaReal','sprint'));
 
     }
 }

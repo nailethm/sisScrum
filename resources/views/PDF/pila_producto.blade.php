@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        <title>Usuarios</title>
+        <title>Pila del Producto</title>
         <style type="text/css">                        
           
             body{
@@ -80,46 +80,44 @@
         </footer>
         <div id="details" class="clearfix">
             <div>
-                <h2>Datos de Usuario</h2>
+                <h2>PILA DEL PRODUCTO</h2>
                 <table border="0" cellspacing="0" cellpadding="0">
                     <tr>
-                        <td width="20%"></td>
-                        <td width="40%">
-                            <p><strong>Nombre:</strong> {{ $data1->name }}</p>
+                        <td width="13%"></td>
+                        <td width="50%">
+                            <p><strong>Proyecto:</strong> {{ $data2->nombre }} </p>
                             <p><strong>Fecha y Hora Actual:</strong> {{ Carbon\Carbon::now() }} </p>    
                         </td>
-                        <td width="40%">
-                            <p><strong>CI:</strong> {{ $data1->CI }}</p>
-                            <p><strong>Cargo:</strong> {{ $data1->occupation }}</p>   
+                        <td width="37%">
+                            <p><strong>Dueño Producto:</strong> {{ $data3->where('rol','DP')->count() <> 0 ? $data3->where('rol','DP')->first()->usuario->name : '' }} </p>
+                            <p><strong>Scrum Master:</strong> {{ $data3->where('rol','SM')->count() <> 0 ? $data3->where('rol','SM')->first()->usuario->name : '' }} </p>   
                         </td>
                     </tr>
-                </table>                                                
+                </table>
+                                
             </div>
         </div>
-        <h3>Proyectos Asignados:</h3>
         <table border="1" cellspacing="0" cellpadding="0">
             <thead>
                 <tr>
-                    <th width="2%">#</th>
-                    <th width="49%">Proyecto</th>
-                    <th width="10%">Estado</th>
-                    <th width="12%">Inicio</th>
-                    <th width="12%">Fin</th>
-                    <th width="15%">Rol Asignado</th>                                       
+                    <th width="3%">#</th> 
+                    <th width="55%">Historia</th> 
+                    <th width="10%">Prioridad</th>
+                    <th width="15%">Estado</th>
+                    <th width="17%">Fecha cración</th>                                                                
                 </tr>
             </thead>
             <tbody>
-                @foreach ($data2 as $key => $proy)                
-                <tr>
-                    <td>{{ $key+1 }}</td>
-                    <td>{{ $proy->proyecto->nombre }}</td>
-                    <td>{{ $proy->proyecto->porcentaje_proyecto }}%</td>
-                    <td>{{ $proy->proyecto->inicio_proyecto }}</td>
-                    <td>{{ $proy->proyecto->fin_proyecto }}</td>
-                    <td>{{ $proy->nombre_rol }}</td>                                                     
-                </tr>
+                @foreach ($data1 as $historia) 
+                    <tr>
+                        <td><strong>H{{ $historia->idhistoria }}</strong></td>   
+                        <td>Como <strong>{{ $historia->actor }}</strong> necesito <strong>{{ $historia->requerimiento }}</strong> así podré <strong>{{ $historia->funcionalidad }}</strong></td>                                             
+                        <td>{{ $historia->prioridad }}</td>
+                        <td>{{ $historia->nombre_estado_historia }}</td>
+                        <td>{{ $historia->fecha_creacion }}</td>
+                    </tr>                    
                 @endforeach
             </tbody>            
-        </table>        
+        </table>
     </body>
 </html>

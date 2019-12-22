@@ -19,7 +19,7 @@
        	</div>
        	<div class="content-panel">
        		<h4><i class="fa fa-angle-right"></i> Proyectos en progreso</h4>
-       		@if($proyectos <> null)
+       		@if($proyectos->count() <> 0)
 	        <div class="table-responsive">        	
 				<table class="table table-striped table-advance table-hover">
 		            <thead>
@@ -66,7 +66,7 @@
 	    </div>
 		<div class="content-panel">
 		    <h4><i class="fa fa-angle-right"></i> Proyectos terminados</h4>
-	        @if($proyectos <> null)
+	        @if($proyectos->count() <> 0)
 		        <div class="table-responsive">        	
 					<table class="table table-striped table-advance table-hover">
 			            <thead>
